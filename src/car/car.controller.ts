@@ -27,7 +27,7 @@ export class CarController {
 
   @Get(':id')
   public async getcarByID(@Param('id') id: number) {
-    return this.carServe.getCarbyId(id);
+    return this.carServe.getCarById(id);
   }
 
   @Delete(':id')

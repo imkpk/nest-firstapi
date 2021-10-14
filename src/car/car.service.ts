@@ -1,6 +1,4 @@
 import { HttpException, Injectable } from '@nestjs/common';
-// import { resolve } from 'path';
-import { CARS } from './cars.mock';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { ICar } from './interface/car.interface';
@@ -8,8 +6,9 @@ import { CarDto } from './car.dto';
 
 @Injectable()
 export class CarService {
-  /* private cars = CARS;
+  [x: string]: any;
 
+  /* private cars = CARS;
   // route functions
   public async getCars() {
     return this.cars;
@@ -51,6 +50,7 @@ export class CarService {
     this.cars[carIndex][propertyName] = propertyValue;
     return this.cars;
   } */
+
   constructor(@InjectModel('car') private readonly carModel: Model<ICar>) {}
 
   public async getCars() {
@@ -62,19 +62,19 @@ export class CarService {
     return cars;
   }
   public async postCar(newcar: CarDto) {
-    const cars = await this.carModel(newcar);
+    const cars = await new this.carModel(newcar);
     return cars.save();
   }
   public async getCarById(id) {
-    const carId = await (await this.carModel.findOne({ id })).exec();
+    const carId = await this.carModel.findOne({ id }).exec();
     if (!carId) {
       throw new HttpException('Not Found ', 404);
     }
     return carId;
   }
   public async deleteCarById(id) {
-    const carId = await (await this.carModel.findOne({ id })).exec();
-    if (carId.deleteCount === 0) {
+    const carId = await this.carModel.findOne({ id }).exec();
+    if (!carId) {
       throw new HttpException('Not Found ', 404);
     }
     return carId;
