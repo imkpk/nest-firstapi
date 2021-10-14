@@ -8,7 +8,7 @@ import { CarSchema } from './schemas/car.schema';
   imports: [
     MongooseModule.forFeature([
       {
-        name: 'Car',
+        name: 'car',
         schema: CarSchema,
       },
     ]),
