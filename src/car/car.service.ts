@@ -13,9 +13,11 @@ const carProjection = {
 
 @Injectable()
 export class CarService {
+  [x: string]: any;
   constructor(@InjectModel('car') private readonly carModel: Model<ICar>) {}
   /* private cars = CARS;
 
+  /* private cars = CARS;
   // route functions
   public async getCars() {
     return this.cars;
@@ -70,6 +72,8 @@ export class CarService {
     const cars = await new this.carModel(newcar);
     return cars.save();
   }
+  // public async getCarById(id) {
+  //   const carId = await this.carModel.findOne({ id }).exec();
   public async getCarbyId(id: number) {
     const carId = await this.carModel.findOne({ id }, carProjection).exec();
     if (!carId) {
@@ -77,6 +81,10 @@ export class CarService {
     }
     return carId;
   }
+  // public async deleteCarById(id) {
+  //   const carId = await this.carModel.findOne({ id }).exec();
+  //   if (!carId) {
+  //     throw new HttpException('Not Found ', 404);
   public async deleteCarById(id: number): Promise<CarDto> {
     const car = await this.carModel.deleteOne({ id }).exec();
     if (car.deletedCount === 0) {
